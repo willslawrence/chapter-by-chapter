@@ -106,61 +106,63 @@
 
         /* ── Stats section ── */
         .stats-section {
-            display: flex;
-            gap: 14px;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 28px;
             background: var(--oc-surface);
             border: 1px solid var(--oc-border);
-            border-radius: 12px;
-            padding: 14px 16px;
-            margin-bottom: 16px; margin-top: 4px;
+            border-radius: 14px;
+            padding: 32px;
+            margin-bottom: 20px; margin-top: 4px;
             align-items: center;
-            flex-wrap: wrap;
+        }
+        @media (max-width: 680px) {
+            .stats-section { grid-template-columns: 1fr; }
         }
 
         /* Rings */
-        .rings-area { display: flex; gap: 12px; align-items: center; flex-shrink: 0; }
+        .rings-area { display: flex; gap: 20px; align-items: center; }
 
-        .ring-main { position: relative; width: 72px; height: 72px; flex-shrink: 0; }
-        .ring-main svg { transform: rotate(-90deg); width: 72px; height: 72px; }
+        .ring-main { position: relative; width: 140px; height: 140px; flex-shrink: 0; }
+        .ring-main svg { transform: rotate(-90deg); }
         .ring-center {
             position: absolute; inset: 0;
             display: flex; flex-direction: column;
             align-items: center; justify-content: center;
         }
-        .ring-pct { font-size: 1em; font-weight: 700; color: var(--oc-orange); line-height: 1; }
-        .ring-lbl { font-size: 0.48em; color: var(--oc-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 1px; }
+        .ring-pct { font-size: 1.85em; font-weight: 700; color: var(--oc-orange); line-height: 1; }
+        .ring-lbl { font-size: 0.62em; color: var(--oc-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
 
-        .mini-stack { display: flex; flex-direction: column; gap: 6px; }
-        .ring-mini { display: flex; align-items: center; gap: 6px; }
+        .mini-stack { display: flex; flex-direction: column; gap: 14px; }
+        .ring-mini { display: flex; align-items: center; gap: 10px; }
         .ring-mini svg { transform: rotate(-90deg); flex-shrink: 0; }
-        .mini-title { font-size: 0.68em; font-weight: 600; color: var(--oc-black); }
-        .mini-sub { font-size: 0.58em; color: var(--oc-muted); }
+        .mini-title { font-size: 0.82em; font-weight: 600; color: var(--oc-black); }
+        .mini-sub { font-size: 0.72em; color: var(--oc-muted); }
 
         /* Stat cards */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 6px;
-            flex: 1;
-            min-width: 0;
+            gap: 12px;
+            align-content: stretch;
         }
         .stat-card {
-            background: var(--oc-bg); border-radius: 8px;
-            padding: 8px 6px; text-align: center;
+            background: var(--oc-bg); border-radius: 10px;
+            padding: 20px 12px; text-align: center;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
-        .stat-val { font-size: 1.1em; font-weight: 700; color: var(--oc-black); line-height: 1.1; }
+        .stat-val { font-size: 1.75em; font-weight: 700; color: var(--oc-black); line-height: 1.1; }
         .stat-val.orange { color: var(--oc-orange); }
-        .stat-lbl { font-size: 0.56em; color: var(--oc-muted); margin-top: 3px; line-height: 1.2; }
+        .stat-lbl { font-size: 0.72em; color: var(--oc-muted); margin-top: 6px; line-height: 1.3; }
 
         /* ── Pacing row (inside stats section) ── */
         .stats-pace-row {
-            width: 100%;
+            grid-column: 1 / -1;
             border-top: 1px solid var(--oc-border);
-            padding-top: 10px;
-            display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+            padding-top: 20px;
+            display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
         }
-        .stats-pace-info { flex: 1; min-width: 160px; font-size: 0.68em; color: var(--oc-muted); }
+        .stats-pace-info { flex: 1; min-width: 200px; font-size: 0.83em; color: var(--oc-muted); }
         .stats-pace-info strong { color: var(--oc-black); }
         .pacing-track {
             flex: 2; min-width: 160px; height: 7px;
@@ -481,7 +483,7 @@
 
             <!-- Main ring -->
             <div class="ring-main">
-                <svg viewBox="0 0 140 140">
+                <svg width="140" height="140" viewBox="0 0 140 140">
                     <circle cx="70" cy="70" r="58" class="ring-track" fill="none" stroke-width="11"/>
                     <circle id="ring-all" cx="70" cy="70" r="58" fill="none"
                             stroke="#E8441A" stroke-width="11" stroke-linecap="round"
