@@ -179,7 +179,10 @@
         .left-col, .right-col { display: flex; flex-direction: column; gap: 20px; }
         .left-col { height: 100%; }
         #ot-block { flex: 1; }
-        @media (max-width: 760px) { .main-layout { grid-template-columns: 1fr; } }
+        @media (max-width: 760px) {
+            .main-layout { grid-template-columns: 1fr; }
+            .right-col { order: 2; }
+        }
 
         .testament-block {
             background: var(--oc-surface);
@@ -198,22 +201,21 @@
             font-size: 0.72em; font-weight: 500; color: var(--oc-muted); letter-spacing: 0;
         }
 
-        /* ── Mobile tab switcher ── */
-        .tab-bar { display: none; }
-        @media (max-width: 760px) {
-            .tab-bar {
-                display: flex; gap: 8px; margin-bottom: 16px;
-            }
-            .tab-btn {
-                flex: 1; padding: 10px; border-radius: 9px;
-                border: 1.5px solid var(--oc-border);
-                background: var(--oc-surface); color: var(--oc-muted);
-                font-family: 'Poppins', sans-serif; font-size: 0.82em; font-weight: 600;
-                cursor: pointer; transition: all 0.15s;
-            }
-            .tab-btn.active {
-                background: var(--oc-orange); color: #fff; border-color: var(--oc-orange);
-            }
+        /* ── Testament tab switcher ── */
+        .tab-bar {
+            display: flex; gap: 8px; margin-bottom: 16px;
+            position: sticky; top: 0; z-index: 10;
+            background: var(--oc-bg); padding: 8px 0 4px;
+        }
+        .tab-btn {
+            flex: 1; padding: 10px; border-radius: 9px;
+            border: 1.5px solid var(--oc-border);
+            background: var(--oc-surface); color: var(--oc-muted);
+            font-family: 'Poppins', sans-serif; font-size: 0.82em; font-weight: 600;
+            cursor: pointer; transition: all 0.15s;
+        }
+        .tab-btn.active {
+            background: var(--oc-orange); color: #fff; border-color: var(--oc-orange);
         }
 
         /* Book rows */
@@ -1375,23 +1377,18 @@
         updateStats();
     }
 
-    // ── Mobile tab switcher ───────────────────────────────────────────────────
+    // ── Testament tab switcher (scroll-to + highlight) ─────────────────────
     function setTab(tab) {
-        if (window.innerWidth > 760) return;
-        document.getElementById('ot-block').style.display      = tab === 'ot'      ? '' : 'none';
-        document.getElementById('deutero-block').style.display = (tab === 'deutero' && showDeutero) ? '' : 'none';
-        document.getElementById('nt-block').style.display      = tab === 'nt'      ? '' : 'none';
         document.querySelectorAll('.tab-btn').forEach(b =>
             b.classList.toggle('active', b.getAttribute('data-tab') === tab)
         );
+        const targetId = tab === 'ot' ? 'ot-block' : tab === 'nt' ? 'nt-block' : 'deutero-block';
+        const el = document.getElementById(targetId);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-    window.addEventListener('resize', () => {
-        if (window.innerWidth > 760) {
-            document.getElementById('ot-block').style.display = '';
-            if (showDeutero) document.getElementById('deutero-block').style.display = '';
-            document.getElementById('nt-block').style.display = '';
-        }
-    });
+    // All blocks always visible — show both testaments
+    document.getElementById('ot-block').style.display = '';
+    document.getElementById('nt-block').style.display = '';
 
     // ── How to use panel ──────────────────────────────────────────────────────
     function openAbout()  {
@@ -1479,7 +1476,6 @@
         if (_dtToggle) _dtToggle.textContent = '− Hide Deuterocanonical books';
     }
     updateStats();
-    setTab('ot');
 </script>
 </body>
 </html>
